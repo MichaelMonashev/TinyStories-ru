@@ -140,8 +140,12 @@ def main(args):
         story = story.strip()
         #print(story)
 
+        # заменеям некоторые символы
+        story = story.replace('«', '"')
+        story = story.replace('»', '"')
+        story = story.replace('…', '...')
+
         # проверяем, что не попал английский и маркдаун.
-        # возможно стоило бы добавить … , но это очень редко используемый символ.
         if not bool(re.search('^[\n0123456789абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ —–!",.:;?-]+$', story)):
             print("Wrong simbols in story:", story)
             continue
