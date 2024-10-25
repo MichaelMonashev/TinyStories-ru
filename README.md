@@ -38,3 +38,5 @@ TinyStories-ru - это русскоязычная версия датасета
 Добавить для каждой истории краткое содержание.
 
 Код для валидации пунктуации, грамматики, связности и последовательности текста.
+
+Дедупликация по порогу cos_sim 0.975 с помошью intfloat/multilingual-e5-large (взято из https://huggingface.co/datasets/Vikhrmodels/GrandMaster-PRO-MAX ).
