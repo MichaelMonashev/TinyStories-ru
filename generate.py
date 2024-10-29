@@ -112,7 +112,7 @@ def main(args):
         inputs = inputs.to(model.device)
 
         start = time.perf_counter()
-        with torch.no_grad():
+        with torch.inference_mode():
             outputs = model.generate(**inputs, max_new_tokens=512-input_len-10)
         end = time.perf_counter()
         print ('Time:', end-start)
