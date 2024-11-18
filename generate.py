@@ -122,7 +122,8 @@ def main(args):
         #print(tokens)
 
         # ищем конец рассказа <end_of_turn>
-        end_of_turn_pos = (tokens == 107).nonzero()
+        end_of_turn_id = tokenizer.convert_tokens_to_ids('<end_of_turn>') # 107
+        end_of_turn_pos = (tokens == end_of_turn_id).nonzero()
         #print(end_of_turn_pos)
         #print(end_of_turn_pos.shape[0])
 
