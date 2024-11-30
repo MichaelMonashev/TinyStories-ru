@@ -31,9 +31,19 @@ class Tokenizer():
         return
 
     # text -> tokens
-    def __call__(self, text: str) -> list[int]:
+    def __call__(self, text: str, length: int) -> list[int]:
+        # дополняем справа проблемами
+        text += ' '*length
+
+        # обрезаем лишний текст
+        text = text[:length]
+
+        #делим на символы
         chars = list(text)
+
+        # преобразуем в токены
         tokens = [self.vocab[char] for char in chars]
+
         return tokens
 
     # tokens -> text
