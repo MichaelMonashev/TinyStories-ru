@@ -22,18 +22,19 @@ def main(args = {}):
 
     except (FileExistsError, FileNotFoundError):
         vocab = Vocab()
-        files = glob.glob(dataPath + "/*.jsonl")
-        for filename in files:
-            print("Loading", filename,"\r")
-            with open(filename, 'r', encoding='utf-8') as f:
-                for line in f:
-                    data = json.loads(line)
 
-                    text = data['story']
-                    vocab.make(text)
+    files = glob.glob(dataPath + "/*.jsonl")
+    for filename in files:
+        print("Loading", filename,"\r")
+        with open(filename, 'r', encoding='utf-8') as f:
+            for line in f:
+                data = json.loads(line)
 
-        with open(vocabPath, 'w') as f:
-            json.dump(vocab.vocab, f, ensure_ascii=False)
+                text = data['story']
+                vocab.make(text)
+
+    with open(vocabPath, 'w') as f:
+        json.dump(vocab.vocab, f, ensure_ascii=False)
 
     print(vocab)
 
