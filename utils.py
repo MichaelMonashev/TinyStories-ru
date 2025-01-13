@@ -1,3 +1,5 @@
+from typing import Union
+
 class Vocab():
     def __init__(self, vocab:dict[str,int] = {}):
         self.vocab = vocab # str -> int
@@ -31,18 +33,42 @@ class Tokenizer():
         return
 
     # text -> tokens
-    def __call__(self, text: str, length: int) -> list[int]:
-        # дополняем справа проблемами
-        text += ' '*length
-
-        # обрезаем лишний текст
-        text = text[:length]
-
+    def __call__(self, text: str, length:int=0, padding_side:str = 'right', pad_token:Union[str, int] = ' ', truncation_side:str = 'right') -> list[int]:
         #делим на символы
         chars = list(text)
 
         # преобразуем в токены
         tokens = [self.vocab[char] for char in chars]
+
+        if length>0:
+            tokens =  self.pad(tokens, length, padding_side, pad_token)
+            tokens =  self.truncate(tokens, length, truncation_side)
+
+        return tokens
+
+    # tokens -> tokens
+    def pad(self, tokens: list[int], length: int, padding_side:str = 'right', pad_token:Union[str, int] = ' ') -> list[int]:
+        if type(pad_token) is str:
+            pad_token = self.vocab[pad_token]
+
+        # дополняем проблемами
+        if len(tokens)<length:
+            pad_len = length-len(tokens)
+            if padding_side == 'right':
+                tokens += [pad_token]*pad_len
+            else:
+                tokens = [pad_token]*pad_len + tokens
+
+        return tokens
+
+    # tokens -> tokens
+    def truncate(self, tokens: list[int], length: int, truncation_side:str = 'right') -> list[int]:
+        # обрезаем лишнee
+        if len(tokens)>length:
+            if truncation_side == 'right':
+                tokens = tokens[:length]
+            else:
+                tokens = tokens[-length:]
 
         return tokens
 
